@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Music Player</title>
+</head>
+
+<body>
+
+<h2>🎵 내 음악 플레이어</h2>
+
+<audio id="player" controls style="width:100%;"></audio>
+
+<br><br>
+
+<ol id="list"></ol>
+
+<script>
+
+let songs = [
+"song1.mp3",
+"song2.mp3",
+"song3.mp3"
+];
+
+let current = 0;
+
+const player = document.getElementById("player");
+const list = document.getElementById("list");
+
+// 목록 만들기
+songs.forEach((song, i) => {
+    let li = document.createElement("li");
+    li.innerText = song;
+    li.onclick = () => playSong(i);
+    list.appendChild(li);
+});
+
+function playSong(i){
+    current = i;
+    player.src = songs[current];
+    player.play();
+}
+
+// 자동 다음곡
+player.addEventListener("ended", () => {
+    current++;
+    if(current >= songs.length){
+        current = 0;
+    }
+    playSong(current);
+});
+
+// 첫 곡 실행
+playSong(0);
+
+</script>
+
+</body>
+</html>
